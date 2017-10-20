@@ -1,0 +1,42 @@
+# Fix for CVE-2016-5385 https://httpoxy.org/#fix-now
+unset req.http.proxy;
+
+if (req.method == "PRI") {
+    # We do not support SPDY or HTTP/2.0
+    return (synth(405));
+}
+
+# Check for possible non-standard http method
+if (req.method != "GET" &&
+    req.method != "HEAD" &&
+    req.method != "PUT" &&
+    req.method != "POST" &&
+    req.method != "TRACE" &&
+    req.method != "OPTIONS" &&
+    req.method != "DELETE" &&
+    req.method != "PATCH") {
+    return (pipe);
+}
+
+# Normalize the header, remove the port (in case you're testing this on various TCP ports)
+set req.http.Host = regsub(req.http.Host, ":[0-9]+", "");
+
+# Normalize the query arguments
+set req.url = std.querysort(req.url);
+
+# We only deal with GET and HEAD by default
+if (req.method != "GET" && req.method != "HEAD") {
+    return (pass);
+}
+
+# Strip hash, server doesn't need it.
+if (req.url ~ "\#") {
+  set req.url = regsub(req.url, "\#.*$", "");
+}
+
+# Strip a trailing ? if it exists
+if (req.url ~ "\?$") {
+  set req.url = regsub(req.url, "\?$", "");
+}
+
+return (hash);

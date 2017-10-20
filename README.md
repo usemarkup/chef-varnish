@@ -1,4 +1,4 @@
-# Chef Node
+# Chef Varnish
 [![Build Status](https://travis-ci.org/usemarkup/chef-varnish.svg?branch=master)](https://travis-ci.org/usemarkup/chef-varnish)
 
 Installs varnish from https://packagecloud.io/varnishcache/ for CentOS 

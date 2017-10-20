@@ -5,6 +5,32 @@ driver:
   use_sudo: false
 
 platforms:
+  - name: centos-7
+    driver_config:
+      require_chef_omnibus: "13.1.31"
+      image: centos/systemd
+      run_command: /usr/sbin/init
+      privileged: true
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable sshd.service
+        - yum install epel-release -y
+        - yum update yum ca-certificates -y
+        - curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -v 13.1.31 && rm install.sh
+
+  - name: centos-7-chef-12
+    driver_config:
+      require_chef_omnibus: "12.7.2"
+      image: centos/systemd
+      run_command: /usr/sbin/init
+      privileged: true
+      provision_command:
+        - yum install epel-release -y
+        - yum update yum ca-certificates -y
+        - yum install epel-release -y
+        - yum update yum ca-certificates -y
+        - curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -v 12.7.2 && rm install.sh
+
   - name: centos-69-chef-12
     driver_config:
       require_chef_omnibus: "12.7.2"
@@ -15,6 +41,29 @@ platforms:
         - yum update yum ca-certificates -y
         - curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -v 12.7.2 && rm install.sh
 
+  - name: centos-69
+    driver_config:
+      require_chef_omnibus: "13.1.31"
+      image: centos:6.9
+      privileged: true
+      provision_command:
+        - yum install epel-release -y
+        - yum update yum ca-certificates -y
+        - curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -v 13.1.31 && rm install.sh
+
+
+  - name: centos-69-with-nginx
+    driver_config:
+      require_chef_omnibus: "13.1.31"
+      image: centos:6.9
+      privileged: true
+      provision_command:
+        - yum install epel-release -y
+        - yum install nginx -y
+        - yum update yum ca-certificates -y
+        - chkconfig nginx on
+        - curl -LO https://omnitruck.chef.io/install.sh && sudo bash ./install.sh -v 13.1.31 && rm install.sh
+
 provisioner:
   name: chef_solo
 
@@ -23,9 +72,33 @@ verifier:
 
 suites:
   - name: varnish
+    attributes:
+      varnish:
+        listen_port: 80
     run_list:
         - varnish
-#    verifier:
-#      inspec_tests:
-#        - tests/node.rb
-#        - tests/yarn.rb
+    verifier:
+      inspec_tests:
+        - tests/varnish.rb
+        - tests/listening_on_port_80_varnish.rb
+  - name: varnish-881
+    attributes:
+      varnish:
+        listen_port: 881
+    run_list:
+        - varnish
+    verifier:
+      inspec_tests:
+        - tests/varnish.rb
+        - tests/listening_on_port_881_varnish.rb
+  - name: varnish-881-with-backend
+    attributes:
+      varnish:
+        listen_port: 881
+    run_list:
+        - varnish
+    verifier:
+      inspec_tests:
+        - tests/varnish.rb
+        - tests/listening_on_port_881_varnish.rb
+        - tests/varnish-with-backend.rb

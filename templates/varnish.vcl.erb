@@ -1,35 +1,26 @@
-#
-# This is an example VCL file for Varnish.
-#
-# It does not do anything by default, delegating control to the
-# builtin VCL. The builtin VCL is called when there is no explicit
-# return statement.
-#
-# See the VCL chapters in the Users Guide at https://www.varnish-cache.org/docs/
-# and https://www.varnish-cache.org/trac/wiki/VCLExamples for more examples.
+# THIS IS AN AUTO GENERATED FILE BY CHEF
+# PLEASE SEE THE VARNISH COOKBOOK FOR CHANGES
 
-# Marker to tell the VCL compiler that this VCL has been adapted to the
-# new 4.0 format.
 vcl 4.0;
+import std;
 
-# Default backend definition. Set this to point to your content server.
+# Default backend definition.
 backend default {
     .host = "127.0.0.1";
     .port = "8080";
+    .connect_timeout = 1s;
 }
 
 sub vcl_recv {
-    # Happens before we check if we have this in cache already.
-    #
-    # Typically you clean up the request here, removing cookies you don't need,
-    # rewriting the request, etc.
+<%=::File.read('/etc/varnish/subroutines/recv.vcl')%>
 }
 
 sub vcl_backend_response {
-    # Happens after we have read the response headers from the backend.
-    #
-    # Here you clean the response headers, removing silly Set-Cookie headers
-    # and other mistakes your backend does.
+<%=::File.read('/etc/varnish/subroutines/backend_response.vcl')%>
+}
+
+sub vcl_backend_error {
+<%=::File.read('/etc/varnish/subroutines/backend_error.vcl')%>
 }
 
 sub vcl_deliver {
@@ -37,4 +28,22 @@ sub vcl_deliver {
     # response to the client.
     #
     # You can do accounting or modifying the final object here.
+
+    # Remove some headers: Apache version & OS
+    unset resp.http.Server;
+    unset resp.http.X-Drupal-Cache;
+    unset resp.http.X-Varnish;
+    unset resp.http.Link;
+    unset resp.http.X-Generator;
+    unset resp.http.X-url;
+    unset resp.http.X-url;
+    unset resp.http.Via;
+    unset resp.http.X-Backend;
+    unset resp.http.X-host;
+    unset resp.http.Forwarded;
+    unset resp.http.X-Powered-By;
+
+    set resp.http.X-Server-Identity = server.hostname;
+
+    return (deliver);
 }
