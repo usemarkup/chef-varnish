@@ -13,7 +13,7 @@ default[:varnish][:version] = '41'
 
 ```json
   "run_list": [
-    "recipe[varnish]"
+    "recipe[varnish-centos]"
   ]
 ```
 

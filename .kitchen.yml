@@ -76,7 +76,7 @@ suites:
       varnish:
         listen_port: 80
     run_list:
-        - varnish
+        - varnish-centos
     verifier:
       inspec_tests:
         - tests/varnish.rb
@@ -86,7 +86,7 @@ suites:
       varnish:
         listen_port: 881
     run_list:
-        - varnish
+        - varnish-centos
     verifier:
       inspec_tests:
         - tests/varnish.rb
@@ -96,7 +96,7 @@ suites:
       varnish:
         listen_port: 881
     run_list:
-        - varnish
+        - varnish-centos
     verifier:
       inspec_tests:
         - tests/varnish.rb

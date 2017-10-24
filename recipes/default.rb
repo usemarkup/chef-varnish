@@ -22,25 +22,30 @@ end
 
 template '/etc/varnish/subroutines/recv.vcl' do
   source 'subroutines/recv.vcl.erb'
+  cookbook node['varnish']['templates']['recv']['cookbook']
   variables(varnish: node['varnish'])
 end
 
 template '/etc/varnish/subroutines/backend_response.vcl' do
   source 'subroutines/backend_response.vcl.erb'
+  cookbook node['varnish']['templates']['backend_response']['cookbook']
   variables(varnish: node['varnish'])
 end
 
 template '/etc/varnish/subroutines/backend_error.vcl' do
   source 'subroutines/backend_error.vcl.erb'
+  cookbook node['varnish']['templates']['backend_error']['cookbook']
   variables(varnish: node['varnish'])
 end
 
 template '/etc/varnish/errors/504.html' do
   source 'errors/504.html'
+  cookbook node['varnish']['files']['504'] if defined?(node['varnish']['files']['504'])
 end
 
 template '/etc/varnish/errors/503.html' do
   source 'errors/503.html'
+  cookbook node['varnish']['files']['503'] if defined?(node['varnish']['files']['503'])
 end
 
 # Lets also compose default VCL

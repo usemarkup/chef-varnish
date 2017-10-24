@@ -1,4 +1,4 @@
-name 'varnishd'
+name 'varnish-centos'
 license 'MIT Licence'
 description 'Installs varnish from the package manager'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
