@@ -18,4 +18,3 @@ default['varnish']['templates']['backend_response']['cookbook'] = 'varnish-cento
 
 default['varnish']['files']['504'] = nil
 default['varnish']['files']['503'] = nil
-
