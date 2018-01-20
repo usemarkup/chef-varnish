@@ -1,27 +1,35 @@
-# Happens after we have read the response headers from the backend.
+# Happens only on a miss/pass and after have read the response from the backend but before its cached
 # https://www.varnish-software.com/wiki/content/tutorials/varnish/builtin_vcl.html
 # https://github.com/mattiasgeniar/varnish-4.0-configuration-templates/blob/master/default.vcl#L299
 
-# Enable gzip https://varnish-cache.org/docs/4.0/phk/gzip.html
-# set beresp.do_gzip = true;
+# Pause ESI request and remove Surrogate-Control header
+if (beresp.http.Surrogate-Control ~ "ESI/1.0") {
+  unset beresp.http.Surrogate-Control;
+  set beresp.do_esi = true;
+}
 
+# Remove Cookie from the backend response before sending to the browser
 if (bereq.url ~ "^[^?]*\.(7z|avi|bmp|bz2|css|csv|doc|docx|eot|flac|flv|gif|gz|ico|jpeg|jpg|js|less|mka|mkv|mov|mp3|mp4|mpeg|mpg|odt|otf|ogg|ogm|opus|pdf|png|ppt|pptx|rar|rtf|svg|svgz|swf|tar|tbz|tgz|ttf|txt|txz|wav|webm|webp|woff|woff2|xls|xlsx|xml|xz|zip)(\?.*)?$") {
     unset beresp.http.set-cookie;
 }
 
+# If backend response says cache for zero seconds or prevents cache via (no-cache, no-store, private) mark has no grace
+# and furthermore not cacheable (somewhat overlapping Varnish's default)
 if (beresp.ttl <= 0s ||
     beresp.http.Pragma ~ "no-cache" ||
     !beresp.http.Cache-Control ||
     beresp.http.Cache-Control ~ "no-cache|no-store|private"
 ) {
-    set beresp.grace = 0s;
     set beresp.uncacheable = true;
 }
 
+# If the object has at least 60 seconds then allow it to be stored for an extra 24 hours
+# to handle a complete loss of the backend & async fetching
 if (beresp.ttl > 60s) {
-    set beresp.grace = 6h;
+    set beresp.grace = 24h;
 }
 
+# If we have a permanent redirect, then it should be permanent (12 hours is enough)
 if (beresp.status == 301) {
-    set beresp.ttl = 24h;
+    set beresp.ttl = 12h;
 }

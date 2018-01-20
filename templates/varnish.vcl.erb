@@ -11,6 +11,14 @@ backend default {
     .connect_timeout = 1s;
 }
 
+acl invalidators {
+<% (@varnish['invalidators'] || []).each do |ip| %>
+    "<%= ip %>";
+<% end %>
+}
+
+<%=::File.read('/etc/varnish/subroutines/shield.vcl')%>
+
 sub vcl_recv {
 <%=::File.read('/etc/varnish/subroutines/recv.vcl')%>
 }
@@ -24,26 +32,24 @@ sub vcl_backend_error {
 }
 
 sub vcl_deliver {
-    # Happens when we have all the pieces we need, and are about to send the
-    # response to the client.
-    #
-    # You can do accounting or modifying the final object here.
+<%=::File.read('/etc/varnish/subroutines/deliver.vcl')%>
+}
 
-    # Remove some headers: Apache version & OS
-    unset resp.http.Server;
-    unset resp.http.X-Drupal-Cache;
-    unset resp.http.X-Varnish;
-    unset resp.http.Link;
-    unset resp.http.X-Generator;
-    unset resp.http.X-url;
-    unset resp.http.X-url;
-    unset resp.http.Via;
-    unset resp.http.X-Backend;
-    unset resp.http.X-host;
-    unset resp.http.Forwarded;
-    unset resp.http.X-Powered-By;
+sub vcl_hit {
+    set req.http.X-TTL = obj.ttl;
+    set req.http.X-Grace = obj.grace;
 
-    set resp.http.X-Server-Identity = server.hostname;
+    if (obj.ttl >= 0s) {
+        return (deliver);
+    }
 
-    return (deliver);
+    if (obj.ttl + obj.grace > 0s) {
+        # Flag the request as being stale (grace)
+        set req.http.X-Using-Stale = "true";
+
+        return (deliver);
+    }
+
+    // fetch & deliver once we get the result
+    return (fetch);
 }

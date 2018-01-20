@@ -10,13 +10,13 @@ bundle:
 berks:
 	rm -rf cookbooks/ && bundle exec berks vendor cookbooks
 
-vagrant:
+provision:
 	vagrant up --provision
 
 kitchen:
 	bundle exec kitchen test
 
 style:
-	bundle exec cookstyle -D
+	bundle exec cookstyle -D recipes/ attributes/
 
-all: bundle berks vagrant
+all: bundle berks provision

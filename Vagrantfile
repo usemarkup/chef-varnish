@@ -34,4 +34,6 @@ Vagrant.configure(2) do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.add_recipe "varnish-centos"
   end
+
+  config.vm.provision "shell", path: "vagrant/provision.sh"
 end

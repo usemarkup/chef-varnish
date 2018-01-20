@@ -1,11 +1,11 @@
 if (beresp.status == 503 || beresp.status == 504) {
     set beresp.http.Content-Type = "text/html; charset=utf-8";
-    set beresp.http.Retry-After = "5";
-    set beresp.http.Cache-Control = "no-cache, no-store, private";
-    set beresp.http.X-Error-Reason = beresp.reason;
 
-    set beresp.ttl = 5s; # Prevent repeat attempts / errors and enforce the 5 second Retry-After
-    set beresp.grace = 0s;
+    # Prevent flooding
+    set beresp.http.Retry-After = "10";
+
+    set beresp.http.Cache-Control = "no-cache, no-transform, no-store, private";
+    set beresp.http.X-Error-Reason = beresp.reason;
 
     if (beresp.status == 503) {
         synthetic(std.fileread("/etc/varnish/errors/503.html"));

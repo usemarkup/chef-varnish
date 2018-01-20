@@ -1,0 +1,37 @@
+# Happens as the final bit of the VCL before sending to the client
+
+set resp.http.X-Server-Identity = server.hostname;
+
+<% if @varnish['debug'] %>
+    if (obj.hits > 0) {
+        set resp.http.X-Debug-Varnish-Cache = "HIT";
+    } else {
+        set resp.http.X-Debug-Varnish-Cache = "MISS";
+    }
+
+    set resp.http.X-Debug-Varnish-Hits = obj.hits;
+    set resp.http.X-Debug-Varnish-Restarts = req.restarts;
+
+    # The current age of the object
+    set resp.http.X-Debug-Varnish-Cache-Age = std.integer(resp.http.Age, 0);
+
+    set resp.http.X-Debug-Varnish-Cache-Expire = req.http.X-TTL;
+    set resp.http.X-Debug-Varnish-Grace-Expire = req.http.X-Grace;
+
+    # Return early to prevent stripping more headers
+    return (deliver);
+<% end %>
+
+# Remove some headers: Apache version & OS
+unset resp.http.Server;
+unset resp.http.X-Drupal-Cache;
+unset resp.http.X-Varnish;
+unset resp.http.Link;
+unset resp.http.X-Generator;
+unset resp.http.X-url;
+unset resp.http.X-url;
+unset resp.http.Via;
+unset resp.http.X-Backend;
+unset resp.http.X-host;
+unset resp.http.Forwarded;
+unset resp.http.X-Powered-By;

@@ -3,6 +3,14 @@
 
 Installs varnish from https://packagecloud.io/varnishcache/ for CentOS 
 
+# Varnish Documentation
+
+Standard library functions
+https://varnish-cache.org/docs/5.0/reference/vmod_std.generated.html?highlight=vmod_std
+
+VCL manual
+https://varnish-cache.org/docs/5.0/reference/vcl.html#varnish-configuration-language
+
 ## Using Vagrant
 
 ```bash

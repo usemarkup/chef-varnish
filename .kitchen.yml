@@ -102,3 +102,15 @@ suites:
         - tests/varnish.rb
         - tests/listening_on_port_881_varnish.rb
         - tests/varnish-with-backend.rb
+  - name: varnish5-881-with-backend
+    attributes:
+      varnish:
+        version: 52
+        listen_port: 881
+    run_list:
+        - varnish-centos
+    verifier:
+      inspec_tests:
+        - tests/varnish.rb
+        - tests/listening_on_port_881_varnish.rb
+        - tests/varnish-with-backend.rb
