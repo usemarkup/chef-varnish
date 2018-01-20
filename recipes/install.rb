@@ -7,6 +7,6 @@ yum_repository 'varnish' do
 end
 
 package 'varnish' do
-    action :upgrade
-    notifies :restart, 'service[varnish]', :delayed
+  action :upgrade
+  notifies :restart, 'service[varnish]', :delayed
 end
