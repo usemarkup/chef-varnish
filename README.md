@@ -3,6 +3,18 @@
 
 Installs varnish from https://packagecloud.io/varnishcache/ for CentOS 
 
+## Using Vagrant
+
+```bash
+# You can just use `make all` which will do the following
+
+make bundle
+make berks
+make vagrant
+
+# then visit http://10.100.100.100/
+```
+
 ## Usage
 
 Changing the versions of node can be done via the attributes, see attributes.rb
