@@ -15,6 +15,7 @@ if (req.method == "PURGE") {
 }
 
 call recv_shield;
+call recv_malicious;
 
 if (req.restarts == 0) {
     if (req.http.X-Forwarded-For) {
@@ -29,6 +30,8 @@ if (req.restarts == 0) {
         set req.http.X-Forwarded-Port = "80";
     }
 }
+
+call recv_client_ban;
 
 # Check for possible non-standard http method
 if (req.method != "GET" &&

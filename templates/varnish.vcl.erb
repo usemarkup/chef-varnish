@@ -17,6 +17,8 @@ acl invalidators {
 <% end %>
 }
 
+<%=::File.read('/etc/varnish/subroutines/malicious.vcl')%>
+<%=::File.read('/etc/varnish/subroutines/client_ban.vcl')%>
 <%=::File.read('/etc/varnish/subroutines/shield.vcl')%>
 
 sub vcl_recv {
@@ -45,8 +47,6 @@ sub vcl_hit {
 
     if (obj.ttl + obj.grace > 0s) {
         # Flag the request as being stale (grace)
-        set req.http.X-Using-Stale = "true";
-
         return (deliver);
     }
 

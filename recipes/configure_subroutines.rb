@@ -37,3 +37,15 @@ template '/etc/varnish/subroutines/shield.vcl' do
   variables(varnish: node['varnish'])
   notifies :reload, 'service[varnish]', :delayed
 end
+
+template '/etc/varnish/subroutines/client_ban.vcl' do
+  source 'extra/client_ban.vcl.erb'
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
+template '/etc/varnish/subroutines/malicious.vcl' do
+  source 'extra/malicious.vcl.erb'
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end

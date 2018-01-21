@@ -1,0 +1,11 @@
+acl banned {
+<% (@varnish['clients_banned'] || []).each do |ip| %>
+    "<%= ip %>";
+<% end %>
+}
+
+sub recv_client_ban {
+    if (std.ip(req.http.X-forwarded-for, "1.1.1.1") ~ banned) {
+        return (synth(403));
+    }
+}

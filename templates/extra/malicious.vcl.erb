@@ -1,0 +1,53 @@
+# Various bots are surfing around looking for bits of junk
+
+sub recv_malicious {
+    # anything ending with .php, aspx, asp
+    if (req.url ~ "(?i)\.(php|aspx|asp|jsp)$") {
+        return (synth(403));
+    }
+
+    # anything starting with /index.php
+    if (req.url ~ "(?i)^/index.php") {
+        return (synth(403));
+    }
+
+    # Random bot
+    if (req.url ~ "(?i)^/cgi/json-req") {
+        return (synth(403));
+    }
+
+    # Wordpress
+    if (req.url ~ "(?i)^/wp-(login|admin|includes|content)") {
+        return (synth(403));
+    }
+
+    # Random crap hitting /cgi-bin/
+    if (req.url ~ "(?i)^/cgi-bin") {
+        return (synth(403));
+    }
+
+    # phpBB forums
+    if (req.url ~ "(?i)^/phpBB") {
+        return (synth(403));
+    }
+
+    # Forums
+    if (req.url ~ "(?i)^/forums") {
+        return (synth(403));
+    }
+
+    # vBulletin
+    if (req.url ~ "(?i)^/vBulletin") {
+        return (synth(403));
+    }
+
+    # mantisbt bug tracker
+    if (req.url ~ "(?i)^/mantisbt") {
+        return (synth(403));
+    }
+
+    # if hostname starts with a *.
+    if (req.http.host ~ "^\*\.") {
+        return (synth(403));
+    }
+}
