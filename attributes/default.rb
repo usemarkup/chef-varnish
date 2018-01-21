@@ -1,6 +1,6 @@
 # For Varnish 5.2
-# default['varnish']['version'] = '52'
-default['varnish']['version'] = '41'
+default['varnish']['version'] = '52'
+# default['varnish']['version'] = '41'
 
 default['varnish']['user'] = 'varnish'
 

@@ -51,5 +51,9 @@ sub vcl_hit {
     }
 
     // fetch & deliver once we get the result
-    return (fetch);
+    <% if (@varnish['version'].to_i >= 50) %>
+        return (miss);
+    <% else %>
+        return (fetch);
+    <% end %>
 }
