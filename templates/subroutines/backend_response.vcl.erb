@@ -26,10 +26,12 @@ if (beresp.ttl <= 0s ||
 # If the object has at least 60 seconds then allow it to be stored for an extra 24 hours
 # to handle a complete loss of the backend & async fetching
 if (beresp.ttl > 60s && beresp.ttl < 7200s) {
-    set beresp.grace = 24h;
+    set beresp.grace = 48h;
 }
 
 # If we have a permanent redirect, then it should be permanent (12 hours is enough)
 if (beresp.status == 301) {
     set beresp.ttl = 12h;
 }
+
+set beresp.http.X-Backend = beresp.backend.name;

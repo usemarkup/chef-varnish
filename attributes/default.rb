@@ -70,9 +70,9 @@ default['varnish']['user_agents_banned'] = [
 default['varnish']['debug'] = true
 
 # http://book.varnish-software.com/4.0/chapters/Tuning.html
-default['varnish']['thread_pools'] = 2
-default['varnish']['thread_pool_min'] = 200
-default['varnish']['thread_pool_max'] = 2000
+default['varnish']['thread_pools'] = 4
+default['varnish']['thread_pool_min'] = 50
+default['varnish']['thread_pool_max'] = 1000
 default['varnish']['thread_pool_timeout'] = 120
 
 default['varnish']['conf'] = '/etc/varnish/default.vcl'

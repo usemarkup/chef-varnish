@@ -46,7 +46,7 @@ sub vcl_hit {
     }
 
     if (obj.ttl + obj.grace > 0s) {
-        # Flag the request as being stale (grace)
+        # Serve 'grace'
         return (deliver);
     }
 
@@ -56,4 +56,25 @@ sub vcl_hit {
     <% else %>
         return (fetch);
     <% end %>
+}
+
+sub vcl_hash {
+    if (req.http.HashCookie == "") {
+        unset req.http.HashCookie;
+    }
+    if (req.http.HashCookie) {
+        hash_data(req.http.HashCookie);
+    }
+}
+
+sub vcl_hit {
+    if (req.method == "PURGE") {
+        return (synth(204, "Purged"));
+    }
+}
+
+sub vcl_miss {
+    if (req.method == "PURGE") {
+        return (synth(204, "Purged (Not in cache)"));
+    }
 }

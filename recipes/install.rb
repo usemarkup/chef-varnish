@@ -8,5 +8,5 @@ end
 
 package 'varnish' do
   action :upgrade
-  notifies :restart, 'service[varnish]', :delayed
+  notifies :reload, 'service[varnish]', :delayed
 end

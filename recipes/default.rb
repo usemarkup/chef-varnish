@@ -13,7 +13,7 @@ end
 template '/etc/sysconfig/varnish' do
   source 'sysconfig/varnish.erb'
   variables(varnish: node['varnish'])
-  notifies :restart, 'service[varnish]', :delayed
+  notifies :reload, 'service[varnish]', :delayed
 end
 
 service_provider = nil

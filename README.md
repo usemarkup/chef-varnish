@@ -18,10 +18,10 @@ You can enable debug mode which will add addition headers like below
 ```bash
 X-Server-Identity: chef-varnish
 X-Debug-Varnish-Cache: HIT
-X-Debug-Varnish-Hits: 12
+X-Debug-Varnish-Hits: 15
 X-Debug-Varnish-Restarts: 0
-X-Debug-Varnish-Cache-Age: 97
-X-Debug-Varnish-Cache-Expire: 22.850
+X-Debug-Varnish-Cache-Age: 190
+X-Debug-Varnish-Cache-Expire: -70.330
 X-Debug-Varnish-Grace-Expire: 86400.000
 ```
 
