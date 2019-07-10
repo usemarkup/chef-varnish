@@ -57,7 +57,7 @@ VARNISH_STORAGE_SIZE=<%=@varnish['memory']%>
 VARNISH_STORAGE="malloc,${VARNISH_STORAGE_SIZE}"
 #
 # Default TTL used when the backend does not specify one
-VARNISH_TTL=120
+VARNISH_TTL=0
 #
 # DAEMON_OPTS is used by the init script.
 DAEMON_OPTS="-j unix,user=<%=@varnish['user']%> \
