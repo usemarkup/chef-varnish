@@ -50,22 +50,14 @@ VARNISH_MIN_THREADS=<%=@varnish['thread_pool_min']%>
 VARNISH_MAX_THREADS=<%=@varnish['thread_pool_max']%>
 VARNISH_THREADS_POOLS=<%=@varnish['thread_pools']%>
 #
-# Cache file size: in bytes, optionally using k / M / G / T suffix.
-VARNISH_STORAGE_SIZE=<%=@varnish['memory']%>
-#
 # Backend storage specification
-VARNISH_STORAGE="malloc,${VARNISH_STORAGE_SIZE}"
+VARNISH_STORAGE="malloc,<%=@varnish['memory']%>"
 #
 # Default TTL used when the backend does not specify one
 VARNISH_TTL=0
 #
 # DAEMON_OPTS is used by the init script.
 DAEMON_OPTS="-j unix,user=<%=@varnish['user']%> \
-             -a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
-             -f ${VARNISH_VCL_CONF} \
-             -T ${VARNISH_ADMIN_LISTEN_ADDRESS}:${VARNISH_ADMIN_LISTEN_PORT} \
-             -p thread_pool_min=${VARNISH_MIN_THREADS} \
-             -p thread_pool_max=${VARNISH_MAX_THREADS} \
-             -p thread_pools=${VARNISH_THREADS_POOLS} \
-             -S ${VARNISH_SECRET_FILE} \
-             -s ${VARNISH_STORAGE}"
+             -p thread_pool_min=<%=@varnish['thread_pool_min']%> \
+             -p thread_pool_max=<%=@varnish['thread_pool_max']%> \
+             -p thread_pools=<%=@varnish['thread_pools']%>

@@ -1,6 +1,9 @@
-# For Varnish 5.2
-default['varnish']['version'] = '52'
-# default['varnish']['version'] = '41'
+default['varnish']['version'] = '60'
+
+default['varnish']['backends'] = {}
+default['varnish']['backends']['default'] = {}
+default['varnish']['backends']['default']['host'] = '127.0.0.1'
+default['varnish']['backends']['default']['port'] = '8080'
 
 default['varnish']['user'] = 'varnish'
 
@@ -65,6 +68,8 @@ default['varnish']['user_agents_banned'] = [
   'omgili',
   'RU_Bot',
   'muhstik',
+  'UptimeRobot',
+  'check_http',
 ]
 
 default['varnish']['debug'] = true

@@ -11,7 +11,7 @@ require 'ffi'
 Vagrant.configure(2) do |config|
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "gsdev/centos-6-9-minimal-chef-12-6-0"
+  config.vm.box = "bento/centos-7"
 
   config.vm.hostname = "chef-varnish"
 
@@ -31,9 +31,10 @@ Vagrant.configure(2) do |config|
     overrides.ssh.forward_agent = true
   end
 
+  config.vm.provision "shell", path: "vagrant/provision.sh"
+
   config.vm.provision "chef_solo" do |chef|
+    chef.version = "13"
     chef.add_recipe "varnish-centos"
   end
-
-  config.vm.provision "shell", path: "vagrant/provision.sh"
 end

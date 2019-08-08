@@ -29,9 +29,9 @@ if (beresp.ttl > 60s && beresp.ttl < 7200s) {
     set beresp.grace = 48h;
 }
 
-# If we have a permanent redirect, then it should be permanent (12 hours is enough)
-if (beresp.status == 301) {
-    set beresp.ttl = 12h;
+# If we have a permanent redirect, then it should be permanent (60 minutes is enough though)
+if (beresp.status == 301 && beresp.ttl <= 0s) {
+    set beresp.ttl = 1h;
 }
 
 set beresp.http.X-Backend = beresp.backend.name;

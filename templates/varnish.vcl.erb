@@ -1,15 +1,16 @@
 # THIS IS AN AUTO GENERATED FILE BY CHEF
 # PLEASE SEE THE VARNISH COOKBOOK FOR CHANGES
 
-vcl 4.0;
+vcl 4.1;
 import std;
 
-# Default backend definition.
-backend default {
-    .host = "127.0.0.1";
-    .port = "8080";
+<% (@varnish['backends'] || []).each do |name, backend| %>
+backend <%=name%> {
+    .host = "<%=backend['host']%>";
+    .port = "<%=backend['port']%>";
     .connect_timeout = 1s;
 }
+<% end %>
 
 acl invalidators {
 <% (@varnish['invalidators'] || []).each do |ip| %>

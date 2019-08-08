@@ -42,7 +42,7 @@ make vagrant
 Changing the versions of node can be done via the attributes, see attributes.rb
 
 ```ruby
-default[:varnish][:version] = '41'
+default[:varnish][:version] = '60'
 ```
 
 ```json
@@ -57,10 +57,8 @@ This cookbook assumes you already have `epel-release` installed.
 
 ## Support
 
-- CentOS 6.x
 - CentOS 7.x
 
 ### Chef Support (tested)
 
-- Chef 12.7+
 - Chef 13.1
