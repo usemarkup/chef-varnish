@@ -5,7 +5,7 @@ default['varnish']['package_version'] = '6.0.0-1.el7'
 default['varnish']['start_at_boot'] = true
 
 default['varnish']['vmod']['dynamic'] = false
-default['varnish']['vmod']['dynamic_backend_host'] = nil;
+default['varnish']['vmod']['dynamic_backend_host'] = nil
 
 default['varnish']['backends'] = {}
 default['varnish']['backends']['default'] = {}
