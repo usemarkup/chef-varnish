@@ -40,13 +40,13 @@ end
 
 execute 'ensure-varnish-is-running' do
   command 'echo ensure-varnish-is-running'
-  action :nothing
+  action :run
   notifies :start, 'service[varnish]', :delayed
 end
 
 execute 'ensure-varnish-is-started-at-boot' do
   command 'echo ensure-varnish-is-started-at-boot'
-  action :nothing
+  action :run
   notifies :enable, 'service[varnish]', :delayed
   only_if { node['varnish']['start_at_boot'] }
 end
