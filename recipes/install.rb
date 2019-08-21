@@ -22,6 +22,6 @@ unless node['varnish']['package_version'].nil?
   end
 end
 
-unless node['varnish']['vmod']['dynamic']
+if node['varnish']['vmod']['dynamic']
   include_recipe 'varnish-centos::vmod_dynamic'
 end
