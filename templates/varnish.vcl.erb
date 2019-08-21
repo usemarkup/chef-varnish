@@ -4,6 +4,10 @@
 vcl 4.1;
 import std;
 
+<% if (@varnish['vmod']['dynamic']) %>
+import dynamic;
+<% end %>
+
 <% (@varnish['backends'] || []).each do |name, backend| %>
 backend <%=name%> {
     .host = "<%=backend['host']%>";
@@ -22,7 +26,15 @@ acl invalidators {
 <%=::File.read('/etc/varnish/subroutines/client_ban.vcl')%>
 <%=::File.read('/etc/varnish/subroutines/shield.vcl')%>
 
+sub vcl_init{
+<%=::File.read('/etc/varnish/subroutines/init.vcl')%>
+}
+
 sub vcl_recv {
+<% if (@varnish['vmod']['dynamic_backend_host']) %>
+set req.backend_hint = dynamic_backend.backend("<%=@varnish['vmod']['dynamic_backend_host']%>");
+<% end %>
+
 <%=::File.read('/etc/varnish/subroutines/recv.vcl')%>
 }
 

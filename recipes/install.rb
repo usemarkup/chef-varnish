@@ -7,6 +7,21 @@ yum_repository 'varnish' do
 end
 
 package 'varnish' do
-  action :upgrade
+  action :install
   notifies :reload, 'service[varnish]', :delayed
+  version node['varnish']['package_version']
+end
+
+unless node['varnish']['package_version'].nil?
+  include_recipe 'yum-plugin-versionlock'
+
+  yum_version_lock 'varnish' do
+    version node['varnish']['package_version']
+    release '1'
+    action :add
+  end
+end
+
+unless node['varnish']['vmod']['dynamic']
+  include_recipe 'varnish-centos::vmod_dynamic'
 end

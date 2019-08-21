@@ -4,6 +4,13 @@ directory '/etc/varnish/subroutines' do
   action :create
 end
 
+template '/etc/varnish/subroutines/init.vcl' do
+  source 'subroutines/init.vcl.erb'
+  cookbook node['varnish']['templates']['cookbook']['init']
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
 template '/etc/varnish/subroutines/recv.vcl' do
   source 'subroutines/recv.vcl.erb'
   cookbook node['varnish']['templates']['cookbook']['recv']

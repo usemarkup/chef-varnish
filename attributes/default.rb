@@ -1,4 +1,9 @@
 default['varnish']['version'] = '60'
+# Only set this if you need a specific version i.e. 6.0.0
+default['varnish']['package_version'] = '6.0.0-1.el7'
+
+default['varnish']['vmod']['dynamic'] = false
+default['varnish']['vmod']['dynamic_backend_host'] = nil;
 
 default['varnish']['backends'] = {}
 default['varnish']['backends']['default'] = {}
@@ -85,6 +90,7 @@ default['varnish']['memory'] = '256M'
 
 default['varnish']['listen_port'] = 80
 
+default['varnish']['templates']['cookbook']['init'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['recv'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['backend_error'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['backend_response'] = 'varnish-centos'
