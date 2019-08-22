@@ -1,6 +1,11 @@
 # Fix for CVE-2016-5385 https://httpoxy.org/#fix-now
 unset req.http.proxy;
 
+# Support AWS Health Check, we are just saying Varnish is running and nothing more
+if (req.http.user-agent ~ "^ELB-HealthChecker") {
+    return (synth(200, ""));
+}
+
 if (req.method == "PRI") {
     # We do not support SPDY or HTTP/2.0
     return (synth(405));
