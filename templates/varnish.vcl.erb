@@ -22,6 +22,7 @@ acl invalidators {
 <% end %>
 }
 
+<%=::File.read('/etc/varnish/subroutines/miscellaneous.vcl')%>
 <%=::File.read('/etc/varnish/subroutines/malicious.vcl')%>
 <%=::File.read('/etc/varnish/subroutines/client_ban.vcl')%>
 <%=::File.read('/etc/varnish/subroutines/shield.vcl')%>

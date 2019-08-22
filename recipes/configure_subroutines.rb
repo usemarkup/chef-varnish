@@ -51,6 +51,13 @@ template '/etc/varnish/subroutines/client_ban.vcl' do
   notifies :reload, 'service[varnish]', :delayed
 end
 
+template '/etc/varnish/subroutines/miscellaneous.vcl' do
+  source 'extra/miscellaneous.vcl.erb'
+  cookbook node['varnish']['templates']['cookbook']['extra_miscellaneous']
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
 template '/etc/varnish/subroutines/malicious.vcl' do
   source 'extra/malicious.vcl.erb'
   variables(varnish: node['varnish'])
