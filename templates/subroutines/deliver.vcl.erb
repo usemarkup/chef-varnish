@@ -2,6 +2,9 @@
 
 set resp.http.X-Server-Identity = server.hostname;
 
+# Always unset the version of Varnish
+unset resp.http.Via;
+
 <% if @varnish['debug'] %>
     if (obj.hits > 0) {
         set resp.http.X-Debug-Varnish-Cache = "HIT";
@@ -30,7 +33,6 @@ unset resp.http.Link;
 unset resp.http.X-Generator;
 unset resp.http.X-url;
 unset resp.http.X-url;
-unset resp.http.Via;
 unset resp.http.X-Backend;
 unset resp.http.X-host;
 unset resp.http.Forwarded;
