@@ -18,6 +18,8 @@ default['varnish']['invalidators'] = ['localhost', '127.0.0.1', '::1']
 
 default['varnish']['clients_banned'] = []
 
+default['varnish']['trusted_hosts'] = []
+
 default['varnish']['user_agents_banned'] = [
   '^Java',
   '^Apache',

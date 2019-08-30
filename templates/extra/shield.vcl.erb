@@ -13,3 +13,15 @@ sub recv_shield {
       }
     }
 }
+sub recv_trusted_hosts {
+    <% if (@varnish['trusted_hosts'].any?) %>
+        if (
+        req.http.http-host == ""
+        <% (@varnish['trusted_hosts'] || []).each do |host| %>
+            || req.http.host !~ "<%= host %>"
+        <% end %>
+        ) {
+        return (synth(403));
+        }
+    <% end %>
+}
