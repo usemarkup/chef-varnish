@@ -6,7 +6,7 @@ sub recv_shield {
       if (
         req.http.user-agent == ""
         <% (@varnish['user_agents_banned'] || []).each do |user_agents| %>
-            || req.http.user-agent ~ "<%= user_agents %>"
+            && req.http.user-agent ~ "<%= user_agents %>"
         <% end %>
       ) {
         return (synth(403));
@@ -18,7 +18,7 @@ sub recv_trusted_hosts {
         if (
         req.http.http-host == ""
         <% (@varnish['trusted_hosts'] || []).each do |host| %>
-            || req.http.host !~ "<%= host %>"
+            && req.http.host !~ "<%= host %>"
         <% end %>
         ) {
         return (synth(403));
