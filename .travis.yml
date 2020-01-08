@@ -4,9 +4,9 @@ dist: trusty
 matrix:
   include:
     - rvm: 2.4
-      env: suite=varnish-centos-7-chef-12
+      env: suite=varnish-centos-7-chef-13
     - rvm: 2.4
-      env: suite=varnish-881-centos-7-chef-12
+      env: suite=varnish-881-centos-7-chef-13
     - rvm: 2.4
       env: suite=varnish-centos-7
     - rvm: 2.4
