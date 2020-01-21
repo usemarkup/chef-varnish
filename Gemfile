@@ -5,7 +5,7 @@ gem 'berkshelf'
 gem 'chef', '~> 13'
 gem 'knife-solo'
 
-gem 'inspec'
+gem 'inspec', '2.1.0'
 gem 'test-kitchen'
 gem 'kitchen-docker'
 gem 'kitchen-inspec'
