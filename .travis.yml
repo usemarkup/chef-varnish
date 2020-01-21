@@ -4,13 +4,17 @@ dist: trusty
 matrix:
   include:
     - rvm: 2.4
-      env: suite=varnish-centos-7-chef-13
-    - rvm: 2.4
-      env: suite=varnish-881-centos-7-chef-13
-    - rvm: 2.4
       env: suite=varnish-centos-7
     - rvm: 2.4
       env: suite=varnish-881-centos-7
+    - rvm: 2.4
+      env: suite=varnish-881-with-backend-centos-7-with-nginx
+    - rvm: 2.4
+      env: suite=varnish5-881-with-backend-centos-7-with-nginx
+    - rvm: 2.4
+      env: suite=varnish-881-with-backend-centos-7
+    - rvm: 2.4
+      env: suite=varnish5-881-with-backend-centos-7
 
 sudo: required
 services: docker
