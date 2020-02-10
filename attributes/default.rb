@@ -79,6 +79,7 @@ default['varnish']['user_agents_banned'] = [
   'muhstik',
   'UptimeRobot',
   'check_http',
+  '^Go-http-client',
 ]
 
 default['varnish']['debug'] = true
