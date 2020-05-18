@@ -17,7 +17,6 @@ unless node['varnish']['package_version'].nil?
 
   yum_version_lock 'varnish' do
     version node['varnish']['package_version']
-    release '1'
     action :add
   end
 end
