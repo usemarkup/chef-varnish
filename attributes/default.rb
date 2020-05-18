@@ -98,6 +98,8 @@ default['varnish']['listen_port'] = 80
 
 default['varnish']['templates']['cookbook']['init'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['recv'] = 'varnish-centos'
+default['varnish']['templates']['cookbook']['recv_extra'] = 'varnish-centos'
+default['varnish']['templates']['cookbook']['hash'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['backend_error'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['backend_response'] = 'varnish-centos'
 default['varnish']['templates']['cookbook']['deliver'] = 'varnish-centos'

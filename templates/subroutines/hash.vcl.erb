@@ -1,0 +1,6 @@
+if (req.http.HashCookie == "") {
+    unset req.http.HashCookie;
+}
+if (req.http.HashCookie) {
+    hash_data(req.http.HashCookie);
+}

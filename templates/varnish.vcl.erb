@@ -73,12 +73,7 @@ sub vcl_hit {
 }
 
 sub vcl_hash {
-    if (req.http.HashCookie == "") {
-        unset req.http.HashCookie;
-    }
-    if (req.http.HashCookie) {
-        hash_data(req.http.HashCookie);
-    }
+<%=::File.read('/etc/varnish/subroutines/hash.vcl')%>
 }
 
 sub vcl_hit {

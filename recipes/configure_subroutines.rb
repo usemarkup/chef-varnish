@@ -18,6 +18,20 @@ template '/etc/varnish/subroutines/recv.vcl' do
   notifies :reload, 'service[varnish]', :delayed
 end
 
+template '/etc/varnish/subroutines/hash.vcl' do
+  source 'subroutines/hash.vcl.erb'
+  cookbook node['varnish']['templates']['cookbook']['hash']
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
+template '/etc/varnish/subroutines/recv_extra.vcl' do
+  source 'subroutines/recv_extra.vcl.erb'
+  cookbook node['varnish']['templates']['cookbook']['recv_extra']
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
 template '/etc/varnish/subroutines/backend_response.vcl' do
   source 'subroutines/backend_response.vcl.erb'
   cookbook node['varnish']['templates']['cookbook']['backend_response']

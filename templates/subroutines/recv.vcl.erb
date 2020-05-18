@@ -62,6 +62,8 @@ set req.http.Host = regsub(req.http.Host, ":[0-9]+", "");
 # Normalize the query arguments
 set req.url = std.querysort(req.url);
 
+<%=::File.read('/etc/varnish/subroutines/recv_extra.vcl')%>
+
 # We only deal with GET and HEAD by default
 if (req.method != "GET" && req.method != "HEAD" && req.method != "PURGE" && req.method != "BAN") {
     return (pass);
