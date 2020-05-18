@@ -39,6 +39,9 @@ VARNISH_LISTEN_PORT=<%=@varnish['listen_port']%>
 # Telnet admin interface listen address and port
 VARNISH_ADMIN_LISTEN_ADDRESS=127.0.0.1
 VARNISH_ADMIN_LISTEN_PORT=6082
+
+VARNISH_USER=varnish
+VARNISH_GROUP=varnish
 #
 # Shared secret file for admin interface
 VARNISH_SECRET_FILE=/etc/varnish/secret
@@ -57,7 +60,8 @@ VARNISH_STORAGE="malloc,<%=@varnish['memory']%>"
 VARNISH_TTL=0
 #
 # DAEMON_OPTS is used by the init script.
-DAEMON_OPTS="-j unix,user=<%=@varnish['user']%> \
+DAEMON_OPTS="-j unix,user=<%=@varnish['user']%>,ccgroup=<%=@varnish['user']%> \
              -p thread_pool_min=<%=@varnish['thread_pool_min']%> \
              -p thread_pool_max=<%=@varnish['thread_pool_max']%> \
-             -p thread_pools=<%=@varnish['thread_pools']%>
+             -p thread_pools=<%=@varnish['thread_pools']%> \
+             -t 0
