@@ -58,10 +58,12 @@ VARNISH_STORAGE="malloc,<%=@varnish['memory']%>"
 #
 # Default TTL used when the backend does not specify one
 VARNISH_TTL=0
+VARNISH_DEFAULT_TTL=0
+
+INSTANCE=<%=@varnish['instance']%>
 #
 # DAEMON_OPTS is used by the init script.
-DAEMON_OPTS="-j unix,user=<%=@varnish['user']%>,ccgroup=<%=@varnish['user']%> \
+DAEMON_OPTS="-j unix,user=<%=@varnish['user']%> \
              -p thread_pool_min=<%=@varnish['thread_pool_min']%> \
              -p thread_pool_max=<%=@varnish['thread_pool_max']%> \
-             -p thread_pools=<%=@varnish['thread_pools']%> \
-             -t 0
+             -p thread_pools=<%=@varnish['thread_pools']%>

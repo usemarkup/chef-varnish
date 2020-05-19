@@ -14,6 +14,7 @@ default['varnish']['backends']['default']['host'] = '127.0.0.1'
 default['varnish']['backends']['default']['port'] = '8080'
 
 default['varnish']['user'] = 'varnish'
+default['varnish']['instance'] = node.name
 
 default['varnish']['invalidators'] = ['localhost', '127.0.0.1', '::1']
 
