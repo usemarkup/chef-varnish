@@ -22,8 +22,6 @@ unless node['varnish']['package_version'].nil?
   end
 end
 
-varnish-6.0.0-1.el7.*
-
 if node['varnish']['vmod']['dynamic']
   include_recipe 'varnish-centos::vmod_dynamic'
 end
