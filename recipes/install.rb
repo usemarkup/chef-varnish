@@ -16,7 +16,7 @@ unless node['varnish']['package_version'].nil?
   include_recipe 'yum-plugin-versionlock'
 
   yum_version_lock 'varnish' do
-    version node['varnish']['package_version']
+    version node['varnish']['package_lock_version']
     release '1'
     action :add
   end
