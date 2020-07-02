@@ -6,10 +6,17 @@ yum_repository 'varnish' do
   action :create
 end
 
-package 'varnish' do
-  action :install
-  notifies :reload, 'service[varnish]', :delayed
-  version node['varnish']['package_version']
+if node['varnish']['package_version']
+  package 'varnish' do
+    action :install
+    notifies :reload, 'service[varnish]', :delayed
+    version node['varnish']['package_version']
+  end
+else
+    package 'varnish' do
+    action :install
+    notifies :reload, 'service[varnish]', :delayed
+  end
 end
 
 if node['varnish']['package_lock']
