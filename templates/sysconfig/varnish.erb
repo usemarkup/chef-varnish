@@ -54,7 +54,7 @@ VARNISH_MAX_THREADS=<%=@varnish['thread_pool_max']%>
 VARNISH_THREADS_POOLS=<%=@varnish['thread_pools']%>
 #
 # Backend storage specification
-VARNISH_STORAGE="malloc,<%=@varnish['memory']%>"
+VARNISH_STORAGE="<%=@varnish['storage']%>,<%=@varnish['memory']%>"
 #
 # Default TTL used when the backend does not specify one
 VARNISH_TTL=0

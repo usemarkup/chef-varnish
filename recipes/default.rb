@@ -1,3 +1,11 @@
+if node['varnish']['version'].to_i >= 60
+  template '/etc/systemd/system/varnish.service' do
+    source 'systemd/varnish.service.erb'
+    variables(varnish: node['varnish'])
+    notifies :reload, 'service[varnish]', :delayed
+  end
+end
+
 include_recipe 'varnish-centos::install'
 
 include_recipe 'varnish-centos::configure_errors'

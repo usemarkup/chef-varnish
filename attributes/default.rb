@@ -1,7 +1,7 @@
-default['varnish']['version'] = '60'
+default['varnish']['version'] = '60lts'
 # Only set this if you need a specific version i.e. 6.0.0
-default['varnish']['package_version'] = '6.0.0-1'
-default['varnish']['package_lock'] = true
+default['varnish']['package_version'] = false
+default['varnish']['package_lock'] = false
 default['varnish']['package_lock_version'] = nil
 
 default['varnish']['start_at_boot'] = true
@@ -95,6 +95,7 @@ default['varnish']['thread_pool_timeout'] = 120
 
 default['varnish']['conf'] = '/etc/varnish/default.vcl'
 default['varnish']['memory'] = '256M'
+default['varnish']['storage'] = 'malloc'
 
 default['varnish']['listen_port'] = 80
 
