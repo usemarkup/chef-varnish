@@ -12,7 +12,7 @@ package 'varnish' do
   version node['varnish']['package_version']
 end
 
-unless node['varnish']['package_version'].nil?
+if node['varnish']['package_lock']
   include_recipe 'yum-plugin-versionlock'
 
   yum_version_lock 'varnish' do
