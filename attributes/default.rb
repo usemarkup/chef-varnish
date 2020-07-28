@@ -8,6 +8,7 @@ default['varnish']['start_at_boot'] = true
 
 default['varnish']['vmod']['dynamic'] = false
 default['varnish']['vmod']['dynamic_backend_host'] = nil
+default['varnish']['vmod']['dynamic_package_version'] = nil
 
 default['varnish']['backends'] = {}
 default['varnish']['backends']['default'] = {}
