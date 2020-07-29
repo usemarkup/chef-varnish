@@ -21,7 +21,6 @@ if node['varnish']['dynamic_package_version']
       action :add
     end
   end
-end
 else
   package 'vmod-dynamic' do
     action :install
