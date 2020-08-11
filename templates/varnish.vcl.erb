@@ -37,14 +37,6 @@ acl invalidators {
 <%=::File.read('/etc/varnish/subroutines/shield.vcl')%>
 
 sub vcl_init{
-<%=::File.read('/etc/varnish/subroutines/init.vcl')%>
-}
-
-sub vcl_recv {
-<% if (@varnish['vmod']['dynamic_backend_host']) %>
-set req.backend_hint = dynamic_backend.backend("<%=@varnish['vmod']['dynamic_backend_host']%>");
-<% end %>
-
 <% if (@varnish['vmod']['directors']) %>
 new directors_round_robin = directors.round_robin();
 
@@ -52,6 +44,14 @@ new directors_round_robin = directors.round_robin();
 directors_round_robin.add_backend(<%=name%>);
 <% end %>
 
+<% end %>
+
+<%=::File.read('/etc/varnish/subroutines/init.vcl')%>
+}
+
+sub vcl_recv {
+<% if (@varnish['vmod']['dynamic_backend_host']) %>
+set req.backend_hint = dynamic_backend.backend("<%=@varnish['vmod']['dynamic_backend_host']%>");
 <% end %>
 
 <%=::File.read('/etc/varnish/subroutines/recv.vcl')%>
