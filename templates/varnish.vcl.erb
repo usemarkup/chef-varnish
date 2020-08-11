@@ -12,6 +12,8 @@ import dynamic;
 import directors;
 <% end %>
 
+<%=::File.read('/etc/varnish/subroutines/before_backend.vcl')%>
+
 <% (@varnish['backends'] || []).each do |name, backend| %>
 backend <%=name%> {
     .host = "<%=backend['host']%>";
@@ -41,6 +43,15 @@ sub vcl_init{
 sub vcl_recv {
 <% if (@varnish['vmod']['dynamic_backend_host']) %>
 set req.backend_hint = dynamic_backend.backend("<%=@varnish['vmod']['dynamic_backend_host']%>");
+<% end %>
+
+<% if (@varnish['vmod']['directors']) %>
+new directors_round_robin = directors.round_robin();
+
+<% (@varnish['backends'] || []).each do |name, backend| %>
+directors_round_robin.add_backend(<%=name%>);
+<% end %>
+
 <% end %>
 
 <%=::File.read('/etc/varnish/subroutines/recv.vcl')%>

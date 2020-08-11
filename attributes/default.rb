@@ -113,6 +113,7 @@ default['varnish']['templates']['cookbook']['backend_response'] = 'varnish-cento
 default['varnish']['templates']['cookbook']['deliver'] = 'varnish-centos'
 
 default['varnish']['templates']['cookbook']['extra_miscellaneous'] = 'varnish-centos'
+default['varnish']['templates']['cookbook']['before_backend'] = 'varnish-centos'
 
 default['varnish']['files']['cookbook']['504'] = 'varnish-centos'
 default['varnish']['files']['cookbook']['503'] = 'varnish-centos'

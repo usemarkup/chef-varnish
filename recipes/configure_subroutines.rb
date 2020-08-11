@@ -72,6 +72,13 @@ template '/etc/varnish/subroutines/miscellaneous.vcl' do
   notifies :reload, 'service[varnish]', :delayed
 end
 
+template '/etc/varnish/subroutines/before_backend.vcl' do
+  source 'extra/before_backend.vcl.erb'
+  cookbook node['varnish']['templates']['cookbook']['before_backend']
+  variables(varnish: node['varnish'])
+  notifies :reload, 'service[varnish]', :delayed
+end
+
 template '/etc/varnish/subroutines/malicious.vcl' do
   source 'extra/malicious.vcl.erb'
   variables(varnish: node['varnish'])
