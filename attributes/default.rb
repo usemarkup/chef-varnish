@@ -10,6 +10,8 @@ default['varnish']['vmod']['directors'] = false
 
 default['varnish']['vmod']['dynamic'] = false
 default['varnish']['vmod']['dynamic_backend_host'] = nil
+default['varnish']['vmod']['dynamic_package_version'] = nil
+default['varnish']['vmod']['dynamic_package_lock_version'] = nil
 
 default['varnish']['backends'] = {}
 default['varnish']['backends']['default'] = {}
