@@ -13,11 +13,18 @@ default['varnish']['vmod']['dynamic_backend_host'] = nil
 default['varnish']['vmod']['dynamic_package_version'] = nil
 default['varnish']['vmod']['dynamic_package_lock_version'] = nil
 
+default['varnish']['set_default_backend'] = true
+
+
 default['varnish']['backends'] = {}
-default['varnish']['backends']['default'] = {}
-default['varnish']['backends']['default']['host'] = '127.0.0.1'
-default['varnish']['backends']['default']['port'] = '8080'
-default['varnish']['backends']['default']['probe'] = nil
+
+
+if node['varnish']['set_default_backend']
+    default['varnish']['backends']['default'] = {}
+    default['varnish']['backends']['default']['host'] = '127.0.0.1'
+    default['varnish']['backends']['default']['port'] = '8080'
+    default['varnish']['backends']['default']['probe'] = nil
+end
 
 default['varnish']['user'] = 'varnish'
 default['varnish']['instance'] = node.name
