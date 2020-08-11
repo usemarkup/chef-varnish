@@ -17,7 +17,7 @@ backend <%=name%> {
     .host = "<%=backend['host']%>";
     .port = "<%=backend['port']%>";
     <% if (backend['probe']) %>
-    .probe = backend['probe'];
+    .probe = <%=backend['probe']%>;
     <% end %>
     .connect_timeout = 1s;
 }
