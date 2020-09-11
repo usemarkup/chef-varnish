@@ -24,6 +24,7 @@ PrivateTmp=true
 ExecStart=/usr/sbin/varnishd \
     -P /var/run/varnish.pid \
     -f $VARNISH_VCL_CONF \
+    -S ${VARNISH_SECRET_FILE} \
     -a ${VARNISH_LISTEN_ADDRESS}:${VARNISH_LISTEN_PORT} \
     -T ${VARNISH_ADMIN_LISTEN_ADDRESS}:${VARNISH_ADMIN_LISTEN_PORT} \
     -s $VARNISH_STORAGE \
