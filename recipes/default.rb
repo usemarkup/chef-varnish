@@ -6,9 +6,10 @@ if node['varnish']['version'].to_i >= 60
   end
 end
 
-template '/usr/sbin/varnish_reload_vcl' do
-  source 'varnish_reload_vcl.erb'
-  notifies :reload, 'service[varnish]', :delayed
+link '/usr/sbin/varnishreload' do
+  to '/usr/sbin/varnish_reload_vcl'
+  only_if { ::File.exist?('/usr/sbin/varnishreload') }
+  link_type :hard
 end
 
 include_recipe 'varnish-centos::install'
