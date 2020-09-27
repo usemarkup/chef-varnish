@@ -32,3 +32,8 @@ end
 if node['varnish']['vmod']['dynamic']
   include_recipe 'varnish-centos::vmod_dynamic'
 end
+
+execute 'generate secret if required' do
+  command 'dd if=/dev/random of=/etc/varnish/secret count=1'
+  not_if { ::File.exist?('/etc/varnish/secret') }
+end
