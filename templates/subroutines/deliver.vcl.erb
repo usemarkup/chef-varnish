@@ -4,22 +4,23 @@ set resp.http.X-Server-Identity = server.hostname;
 
 # Always unset the version of Varnish
 unset resp.http.Via;
+unset resp.http.X-Varnish;
 
 <% if @varnish['debug'] %>
     if (obj.hits > 0) {
-        set resp.http.X-Debug-Varnish-Cache = "HIT";
+        set resp.http.X-Debug-V-Cache = "HIT";
     } else {
-        set resp.http.X-Debug-Varnish-Cache = "MISS";
+        set resp.http.X-Debug-V-Cache = "MISS";
     }
 
-    set resp.http.X-Debug-Varnish-Hits = obj.hits;
-    set resp.http.X-Debug-Varnish-Restarts = req.restarts;
+    set resp.http.X-Debug-V-Hits = obj.hits;
+    set resp.http.X-Debug-V-Restarts = req.restarts;
 
     # The current age of the object
-    set resp.http.X-Debug-Varnish-Cache-Age = std.integer(resp.http.Age, 0);
+    set resp.http.X-Debug-V-Cache-Age = std.integer(resp.http.Age, 0);
 
-    set resp.http.X-Debug-Varnish-Cache-Expire = std.integer(req.http.X-TTL, 0);
-    set resp.http.X-Debug-Varnish-Grace-Expire = std.integer(req.http.X-Grace, 0);
+    set resp.http.X-Debug-V-Cache-Expire = std.integer(req.http.X-TTL, 0);
+    set resp.http.X-Debug-V-Grace-Expire = std.integer(req.http.X-Grace, 0);
 
     # Return early to prevent stripping more headers
     return (deliver);
@@ -28,7 +29,6 @@ unset resp.http.Via;
 # Remove some headers: Apache version & OS
 unset resp.http.Server;
 unset resp.http.X-Drupal-Cache;
-unset resp.http.X-Varnish;
 unset resp.http.Link;
 unset resp.http.X-Generator;
 unset resp.http.X-url;
