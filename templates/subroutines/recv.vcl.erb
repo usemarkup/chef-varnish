@@ -24,20 +24,6 @@ call recv_malicious;
 call recv_trusted_hosts;
 call recv_client_ban;
 
-if (req.restarts == 0) {
-    if (req.http.X-Forwarded-For) {
-        set req.http.X-Forwarded-For = req.http.X-Forwarded-For + ", " + client.ip;
-    } else {
-         set req.http.X-Forwarded-For = client.ip;
-    }
-
-    if (req.http.X-Forwarded-Proto == "https" ) {
-        set req.http.X-Forwarded-Port = "443";
-    } else {
-        set req.http.X-Forwarded-Port = "80";
-    }
-}
-
 # Check for possible non-standard http method
 if (req.method != "GET" &&
     req.method != "HEAD" &&
