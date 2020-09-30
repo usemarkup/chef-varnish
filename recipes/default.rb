@@ -14,12 +14,6 @@ cookbook_file '/usr/sbin/varnishreload' do
   action :create_if_missing
 end
 
-link '/usr/sbin/varnishreload' do
-  to '/usr/sbin/varnish_reload_vcl'
-  only_if { ::File.exist?('/usr/sbin/varnishreload') }
-  link_type :hard
-end
-
 include_recipe 'varnish-centos::install'
 
 include_recipe 'varnish-centos::configure_errors'

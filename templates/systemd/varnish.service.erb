@@ -30,7 +30,7 @@ ExecStart=/usr/sbin/varnishd \
     -s $VARNISH_STORAGE \
     $DAEMON_OPTS
 
-ExecReload=/usr/sbin/varnish_reload_vcl
+ExecReload=/usr/sbin/varnishreload
 
 [Install]
 WantedBy=multi-user.target
