@@ -6,6 +6,14 @@ if node['varnish']['version'].to_i >= 60
   end
 end
 
+cookbook_file '/usr/sbin/varnishreload' do
+  source 'varnishreload'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create_if_missing
+end
+
 link '/usr/sbin/varnishreload' do
   to '/usr/sbin/varnish_reload_vcl'
   only_if { ::File.exist?('/usr/sbin/varnishreload') }
