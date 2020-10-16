@@ -35,3 +35,5 @@ if (beresp.status == 301 && beresp.ttl <= 0s) {
 }
 
 set beresp.http.X-Backend = beresp.backend.name;
+set beresp.http.x-url = bereq.url;
+set beresp.http.x-host = bereq.http.host;
