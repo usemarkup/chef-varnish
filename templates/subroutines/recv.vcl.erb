@@ -66,8 +66,8 @@ if (req.url ~ "\?$") {
   set req.url = regsub(req.url, "\?$", "");
 }
 
-# Enable ESI's
-set req.http.Surrogate-Capability = "key=ESI/1.0";
+# Enable ESIs (off)
+# set req.http.Surrogate-Capability = "key=ESI/1.0";
 
 # Completely override the default
 # https://www.varnish-software.com/wiki/content/tutorials/varnish/builtin_vcl.html
