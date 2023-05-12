@@ -1,7 +1,5 @@
 # Happens as the final bit of the VCL before sending to the client
 
-set resp.http.X-Server-Identity = server.hostname;
-
 # Always unset the version of Varnish
 unset resp.http.Via;
 unset resp.http.X-Varnish;
